@@ -7,7 +7,7 @@ use Nuwber\Events\Amqp\BindFactory;
 use Nuwber\Events\Amqp\QueueFactory;
 use Nuwber\Events\Amqp\Connection;
 
-class ListenCommand extends Command
+class RegisterCommand extends Command
 {
     /**
      * The name and signature of the console command.
