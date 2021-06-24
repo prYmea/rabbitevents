@@ -56,7 +56,15 @@ class Job extends \Illuminate\Queue\Jobs\Job implements \Illuminate\Contracts\Qu
      */
     public function fire()
     {
-        return call_user_func($this->listener, $this->event, Arr::wrap($this->payload()), $this->message, $this->queueManager);
+        return call_user_func(
+            $this->listener,
+            Arr::wrap($this->payload()),
+            [
+                'routingKey' => $this->event,
+                'message' => $this->message,
+                'queue' => $this->queueManager,
+            ]
+        );
     }
 
     /**
