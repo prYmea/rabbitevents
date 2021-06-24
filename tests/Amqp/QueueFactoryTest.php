@@ -14,6 +14,7 @@ use Nuwber\Events\Tests\TestCase;
 
 class QueueFactoryTest extends TestCase
 {
+    private $routingKey = 'key';
     private $event = 'item.created';
 
     public function testMake()
@@ -42,7 +43,7 @@ class QueueFactoryTest extends TestCase
 
         $factory = new QueueFactory($context, $bind, 'test-app');
 
-        $queue = $factory->make($this->event);
+        $queue = $factory->make($this->routingKey, $this->event);
 
         self::assertInstanceOf(AmqpQueue::class, $queue);
         self::assertEquals(AmqpQueue::FLAG_DURABLE, $queue->getFlags());
