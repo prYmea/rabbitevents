@@ -6,6 +6,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | RabbitEvents bindings
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the RabbitMQ bindings settings that should be used
+    */
+    'bindings' => [
+        // queue <- Routing key
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | RabbitEvents Connection Configuration
     |--------------------------------------------------------------------------
     |
@@ -16,10 +27,12 @@ return [
     */
 
     'default' => env('RABBITEVENTS_CONNECTION', 'rabbitmq'),
+
     'connections' => [
         'rabbitmq' => [
             'driver' => 'rabbitmq',
             'exchange' => env('RABBITEVENTS_EXCHANGE', 'events'),
+            'service' => env('RABBITMQ_SERVICE', 'laravel'),
             'host' => env('RABBITEVENTS_HOST', 'localhost'),
             'port' => env('RABBITEVENTS_PORT', 5672),
             'user' => env('RABBITEVENTS_USER', 'guest'),
