@@ -43,7 +43,10 @@ class RabbitEventsServiceProvider extends ServiceProvider
             ObserverMakeCommand::class,
         ]);
 
-        $listerners = array_merge($this->listen, $this->resolveConfig()['listerners']);
+        $listerners = array_merge(
+            $this->listen,
+            $this->app['config']['rabbitevents.listerners']
+        );
 
         foreach ($listerners as $event => $listeners) {
             foreach ($listeners as $listener) {
