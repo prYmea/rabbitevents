@@ -51,6 +51,11 @@ class Manager
         $this->consumer->acknowledge($amqpMessage);
     }
 
+    public function reject(AmqpMessage $amqpMessage, bool $requeue = true): void
+    {
+        $this->consumer->reject($amqpMessage, $requeue);
+    }
+
     /**
      * @param AmqpMessage $message
      * @param int $attempts
