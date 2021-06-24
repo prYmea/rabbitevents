@@ -17,6 +17,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | RabbitEvents listerners
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the RabbitMQ listeneres settings that should be used
+    */
+    'listerners' => [
+        // 'Service:event.*' => [
+        //     MyListener::class
+        // ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | RabbitEvents Connection Configuration
     |--------------------------------------------------------------------------
     |
