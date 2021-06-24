@@ -56,7 +56,7 @@ class Job extends \Illuminate\Queue\Jobs\Job implements \Illuminate\Contracts\Qu
      */
     public function fire()
     {
-        return call_user_func($this->listener, $this->event, Arr::wrap($this->payload()));
+        return call_user_func($this->listener, $this->event, Arr::wrap($this->payload()), $this->message, $this->queueManager);
     }
 
     /**
@@ -113,7 +113,7 @@ class Job extends \Illuminate\Queue\Jobs\Job implements \Illuminate\Contracts\Qu
     {
         return $this->getName();
     }
-    
+
     /**
      * Get the timestamp indicating when the job should timeout.
      */

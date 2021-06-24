@@ -46,7 +46,7 @@ class Worker
                     try {
                         $processor->process($message, $options);
                     } finally {
-                        $queue->acknowledge($message);
+                        // $queue->acknowledge($message);
                     }
                 }
             } catch (Throwable $throwable) {
