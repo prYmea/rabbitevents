@@ -3,7 +3,6 @@
 use Enqueue\AmqpTools\RabbitMqDlxDelayStrategy;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | RabbitEvents listeners
