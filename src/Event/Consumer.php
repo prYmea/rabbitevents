@@ -8,10 +8,7 @@ use Nuwber\Events\Queue\Manager;
 
 abstract class Consumer
 {
-    private Manager $queue;
-    private AmqpMessage $message;
-
-    abstract public function run(string $routingKey, array $payload);
+    abstract public function run(string $routingKey, array $payload, AmqpMessage $message, Manager $queue);
 
     /**
      * Service name
@@ -42,16 +39,15 @@ abstract class Consumer
      */
     public function handle(array $payload, array $data)
     {
-        $this->message = Arr::get($data, 'message');
-        $this->queue = Arr::get($data, 'queue');
-
         $routingKey = (string) Arr::get($data, 'routingKey');
         $prefix = static::servicePrefix();
 
         if ($this->startsWith($routingKey, $prefix)) {
             $this->run(
                 routingKey: substr($routingKey, strlen($prefix)),
-                payload: $payload
+                payload: $payload,
+                message: Arr::get($data, 'message'),
+                queue: Arr::get($data, 'queue'),
             );
         }
     }
@@ -59,27 +55,6 @@ abstract class Consumer
     /*-----------------------------------------------------------------------------------------
      Helper methods
     -----------------------------------------------------------------------------------------*/
-
-    /**
-     * Acknowledge message
-     *
-     * @return void
-     */
-    public function acknowledge(): void
-    {
-        $this->queue?->acknowledge($this->message);
-    }
-
-    /**
-     * Reject message
-     *
-     * @param boolean $requeue
-     * @return void
-     */
-    public function reject(bool $requeue = false): void
-    {
-        $this->queue?->reject($this->message, $requeue);
-    }
 
     /**
      * String starts with
