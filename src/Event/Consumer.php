@@ -14,6 +14,26 @@ abstract class Consumer
     abstract public function run(string $routingKey, array $payload);
 
     /**
+     * Service name
+     *
+     * @return string
+     */
+    abstract public static function service(): string;
+
+    /**
+     * Build service prefix
+     *
+     * @param string $suffix
+     * @return string
+     */
+    public static function servicePrefix(string $suffix = ''): string
+    {
+        $service = static::service();
+
+        return "$service:$suffix";
+    }
+
+    /**
      * Handle the event.
      *
      * @param  array $payload
@@ -26,8 +46,14 @@ abstract class Consumer
         $this->queue = Arr::get($data, 'queue');
 
         $routingKey = (string) Arr::get($data, 'routingKey');
+        $prefix = static::servicePrefix();
 
-        $this->run(routingKey: $routingKey, payload: $payload);
+        if ($this->startsWith($routingKey, $prefix)) {
+            $this->run(
+                routingKey: substr($routingKey, strlen($prefix)),
+                payload: $payload
+            );
+        }
     }
 
     /*-----------------------------------------------------------------------------------------
@@ -53,5 +79,18 @@ abstract class Consumer
     public function reject(bool $requeue = false): void
     {
         $this->queue?->reject($this->message, $requeue);
+    }
+
+    /**
+     * String starts with
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @return boolean
+     */
+    private function startsWith(string $haystack, string $needle): bool
+    {
+        $length = strlen($needle);
+        return (substr($haystack, 0, $length) === $needle);
     }
 }
