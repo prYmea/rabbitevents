@@ -2,9 +2,9 @@
 
 namespace Nuwber\Events\Event;
 
-use Interop\Amqp\Impl\AmqpMessage;
-use Nuwber\Events\Queue\Context;
 use JsonException;
+use Nuwber\Events\Channel;
+use Nuwber\Events\Queue\Context;
 use Nuwber\Events\Queue\Message\Factory as MessageFactory;
 use Nuwber\Events\Queue\Message\Transport;
 
@@ -29,6 +29,8 @@ class Publisher
      */
     public function publish(ShouldPublish $event): void
     {
+        $event->prepare(new Channel($this->context));
+
         $this->transport()->send(
             MessageFactory::make($event->publishEventKey(), $event->toPublish())
         );

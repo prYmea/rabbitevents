@@ -9,7 +9,6 @@ use Nuwber\Events\Console\EventsListCommand;
 use Nuwber\Events\Console\InstallCommand;
 use Nuwber\Events\Console\ListenCommand;
 use Nuwber\Events\Console\ObserverMakeCommand;
-use Nuwber\Events\Console\RegisterCommand;
 use Nuwber\Events\Facades\RabbitEvents;
 use Nuwber\Events\Queue\Context;
 
@@ -37,7 +36,6 @@ class RabbitEventsServiceProvider extends ServiceProvider
 
         $this->commands([
             ListenCommand::class,
-            RegisterCommand::class,
             InstallCommand::class,
             EventsListCommand::class,
             ObserverMakeCommand::class,

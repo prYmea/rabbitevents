@@ -1,12 +1,12 @@
 <?php
 
-namespace Nuwber\Events\Queue\Jobs;
+namespace Nuwber\Events\Event;
 
 use Illuminate\Support\Arr;
 use Interop\Amqp\AmqpMessage;
 use Nuwber\Events\Queue\Manager;
 
-abstract class JobListener
+abstract class Consumer
 {
     private Manager $queue;
     private AmqpMessage $message;
