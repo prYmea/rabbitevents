@@ -17,13 +17,6 @@ class RabbitEventsServiceProvider extends ServiceProvider
     public const DEFAULT_EXCHANGE_NAME = 'events';
 
     /**
-     * The event listener mappings for the application.
-     *
-     * @var array
-     */
-    protected $listen = [];
-
-    /**
      * Register any events for your application.
      *
      * @return void
@@ -41,14 +34,11 @@ class RabbitEventsServiceProvider extends ServiceProvider
             ObserverMakeCommand::class,
         ]);
 
-        $listerners = array_merge(
-            $this->listen,
-            $this->app['config']['rabbitevents.listerners']
-        );
+        $listeners = $this->app['config']['rabbitevents.listeners'];
 
-        foreach ($listerners as $event => $listeners) {
-            foreach ($listeners as $listener) {
-                RabbitEvents::listen($event, $listener);
+        foreach ($listeners as $event => $consumers) {
+            foreach ($consumers as $consumer) {
+                RabbitEvents::listen($event, $consumer);
             }
         }
     }

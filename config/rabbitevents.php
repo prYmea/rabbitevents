@@ -6,14 +6,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | RabbitEvents listerners
+    | RabbitEvents listeners
     |--------------------------------------------------------------------------
     |
     | Here you may define the RabbitMQ listeneres settings that should be used
     */
-    'listerners' => [
+    'listeners' => [
         // 'Service:event.*' => [
-        //     MyListener::class
+        //     MyConsumer::class
         // ]
     ],
 
