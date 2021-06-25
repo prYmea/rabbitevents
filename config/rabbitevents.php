@@ -9,7 +9,7 @@ return [
     | RabbitEvents listeners
     |--------------------------------------------------------------------------
     |
-    | Here you may define the RabbitMQ listeneres settings that should be used
+    | Here you may define the RabbitMQ listeners settings that should be used
     */
     'listeners' => [
         // 'Service:event.*' => [
