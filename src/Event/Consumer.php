@@ -8,6 +8,15 @@ use Nuwber\Events\Queue\Manager;
 
 abstract class Consumer
 {
+    /**
+     * Run consumer
+     *
+     * @param string $routingKey
+     * @param array $payload
+     * @param AmqpMessage $message
+     * @param Manager $queue
+     * @return void
+     */
     abstract public function run(string $routingKey, array $payload, AmqpMessage $message, Manager $queue);
 
     /**
