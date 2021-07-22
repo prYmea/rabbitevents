@@ -5,8 +5,9 @@ namespace Nuwber\Events\Event;
 use JsonException;
 use Nuwber\Events\Channel;
 use Nuwber\Events\Queue\Context;
-use Nuwber\Events\Queue\Message\Factory as MessageFactory;
+use Illuminate\Support\Facades\DB;
 use Nuwber\Events\Queue\Message\Transport;
+use Nuwber\Events\Queue\Message\Factory as MessageFactory;
 
 class Publisher
 {
@@ -38,7 +39,7 @@ class Publisher
         };
 
         if (app()->bound('db.transactions') && property_exists($event, 'afterCommit') && $event->afterCommit) {
-            app()->make('db.transactions')->addCallback($sendEventFn);
+            DB::afterCommit($sendEventFn);
         } else {
             $sendEventFn();
         }
