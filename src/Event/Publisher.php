@@ -13,7 +13,7 @@ class Publisher
     /**
      * @var Context
      */
-    private $context;
+    protected $context;
 
     public function __construct(Context $context)
     {
@@ -29,11 +29,19 @@ class Publisher
      */
     public function publish(ShouldPublish $event): void
     {
-        $event->prepare(new Channel($this->context));
+        $sendEventFn = function () use ($event) {
+            $event->prepare(new Channel($this->context));
 
-        $this->transport()->send(
-            MessageFactory::make($event->publishEventKey(), $event->toPublish())
-        );
+            $this->transport()->send(
+                MessageFactory::make($event->publishEventKey(), $event->toPublish())
+            );
+        };
+
+        if (app()->bound('db.transactions') && property_exists($event, 'afterCommit') && $event->afterCommit) {
+            app()->make('db.transactions')->addCallback($sendEventFn);
+        } else {
+            $sendEventFn();
+        }
     }
 
     /**
