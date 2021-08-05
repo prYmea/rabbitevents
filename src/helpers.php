@@ -32,7 +32,7 @@ if (!function_exists('publish')) {
         }
 
         Container::getInstance()
-            ->get(static::class)
+            ->get($event::class)
             ->publish($event);
     }
 
