@@ -32,7 +32,7 @@ if (!function_exists('publish')) {
         }
 
         Container::getInstance()
-            ->get($event::class)
+            ->get(app()->environment('testing') ? $event::class : Publisher::class)
             ->publish($event);
     }
 
